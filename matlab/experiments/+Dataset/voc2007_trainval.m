@@ -4,8 +4,10 @@ function dataset = voc2007_trainval(dataset, usage, use_flip)
 % or set opts.imdb_test opts.roidb_train
 
 % change to point to your devkit install
+%获得数据集存储路径
 devkit                      = voc2007_devkit();
 
+%将数据读入到imdb和roidb文件
 switch usage
     case {'train'}
 	    %imdb_from_voc()函数:从VOC数据集中加载训练数据，如果是第一次运行该函数，结果会被保存到cache中，以后再运行这个程序时，不用重新计算，直接在cache里加载上次结果

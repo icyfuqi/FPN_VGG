@@ -23,11 +23,14 @@ function conf = fast_rcnn_config(varargin)
     % Minibatch size
     ip.addParamValue('batch_size',      128,            @isscalar);
     % Fraction of minibatch that is foreground labeled (class > 0)
+	%batch_size中正样本的比例，如果正样本个数不足，则添加负样本 
     ip.addParamValue('fg_fraction',     0.25,           @isscalar);
     % Overlap threshold for a ROI to be considered foreground (if >= fg_thresh)
+	%与ground-truth的iou大于阈值0.5的roi作为正样本
     ip.addParamValue('fg_thresh',       0.5,            @isscalar);
     % Overlap threshold for a ROI to be considered background (class = 0 if
     % overlap in [bg_thresh_lo, bg_thresh_hi))
+	%与ground-truth的iou在阈值0.1-0.5之间的roi作为负样本
     ip.addParamValue('bg_thresh_hi',    0.5,            @isscalar);
     ip.addParamValue('bg_thresh_lo',    0.1,            @isscalar);
     % mean image, in RGB order
