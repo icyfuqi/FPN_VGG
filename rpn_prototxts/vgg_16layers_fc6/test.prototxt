@@ -560,7 +560,7 @@ layer {
     name: "upP3crop"
     type: "Crop"
 	bottom: "upP3"
-    bottom: "newC2"
+    bottom: "conv3_3"
     top: "upP3crop"
     crop_param {
         axis: 2

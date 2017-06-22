@@ -412,15 +412,15 @@ layer {
 }
 #-----P5----->upP5-----upP5:(7-1)*2-2*1+4=14-----14*14*256-----
 layer {
-    name: "upP5"
+        name: "upP5"
 	type: "Deconvolution"
-    bottom: "P5" 
+        bottom: "P5" 
 	top: "upP5"
 	param {
 	    lr_mult: 0
 	    decay_mult: 0
 	}
-    convolution_param {
+        convolution_param {
         kernel_size: 4     #{{2 * factor - factor % 2}},factor=2 
   	    stride: 2     #{{factor}},factor=2
         num_output: 256 
@@ -474,15 +474,15 @@ layer {
 }
 #-----P4----->upP4-----upP4:(14-1)*2-2*1+4=28-----28*28*256-----
 layer {
-    name: "upP4"
+        name: "upP4"
 	type: "Deconvolution"
-    bottom: "P4" 
+        bottom: "P4" 
 	top: "upP4"
 	param {
 	    lr_mult: 0
 	    decay_mult: 0
 	}
-    convolution_param {
+        convolution_param {
         kernel_size: 4     #{{2 * factor - factor % 2}},factor=2 
   	    stride: 2     #{{factor}},factor=2
         num_output: 256 
@@ -513,15 +513,15 @@ layer {
 }
 #-----upP4----->upP4crop-----
 layer {
-    name: "upP4crop"
-    type: "Crop"
-    bottom: "upP4"
-    bottom: "newC3"
-    top: "upP4crop"
-    crop_param {
-        axis: 2
-        offset: 0
-    }
+        name: "upP4crop"
+        type: "Crop"
+        bottom: "upP4"
+        bottom: "newC3"
+        top: "upP4crop"
+        crop_param {
+            axis: 2
+            offset: 0
+        }
 }
 #-----newC3+upP4----->P3-----P3:28*28*256-----
 layer {
@@ -560,7 +560,7 @@ layer {
     name: "upP3crop"
     type: "Crop"
     bottom: "upP3"
-    bottom: "newC2"
+    bottom: "conv3_3"
     top: "upP3crop"
     crop_param {
         axis: 2
