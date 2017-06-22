@@ -449,12 +449,24 @@ layer {
 		kernel_size: 1
 	}
 }
+#-----upP5----->upP5crop-----
+layer {
+    name: "upP5crop"
+    type: "Crop"
+    bottom: "upP5"
+    bottom: "newC4"
+    top: "upP5crop"
+    crop_param {
+        axis: 2
+        offset: 0
+    }
+}
 #-----newC4+upP5----->P4-----P4:14*14*256-----
 layer {
     name: "P4"
     type: "Eltwise"
     bottom: "newC4"
-    bottom: "upP5"
+    bottom: "upP5crop"
     top: "P4"
     eltwise_param {
         operation: SUM
@@ -499,12 +511,24 @@ layer {
 		kernel_size: 1
 	}
 }
+#-----upP4----->upP4crop-----
+layer {
+    name: "upP4crop"
+    type: "Crop"
+    bottom: "upP4"
+    bottom: "newC3"
+    top: "upP4crop"
+    crop_param {
+        axis: 2
+        offset: 0
+    }
+}
 #-----newC3+upP4----->P3-----P3:28*28*256-----
 layer {
     name: "P3"
     type: "Eltwise"
     bottom: "newC3"
-    bottom: "upP4"
+    bottom: "upP4crop"
     top: "P3"
     eltwise_param {
         operation: SUM
@@ -531,13 +555,25 @@ layer {
 	    bias_term: false
     }
 }
+#-----upP3----->upP3crop-----
+layer {
+    name: "upP3crop"
+    type: "Crop"
+    bottom: "upP3"
+    bottom: "newC2"
+    top: "upP3crop"
+    crop_param {
+        axis: 2
+        offset: 0
+    }
+}
 #-----conv3_3=C2(56*56*256)-----elmwise(+)-----upP3(56*56*256)-----P2(56*56*256)-----
 #-----conv3_3=C2+upP3----->P2-----P2:56*56*256-----
 layer {
     name: "P2"
     type: "Eltwise"
     bottom: "conv3_3"
-    bottom: "upP3"
+    bottom: "upP3crop"
     top: "P2"
     eltwise_param {
         operation: SUM
