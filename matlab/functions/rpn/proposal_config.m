@@ -53,7 +53,7 @@ function conf = proposal_config(varargin)
     % 16 is true for {Alex,Caffe}Net, VGG_CNN_M_1024, and VGG16
 	%feature map到原图映射的变化率为16，由池化降维算出，与其步长选择有关
 	%VGG中conv5_3相比于输入图像缩小了16倍，也就是相邻两个点之间的stride=16 
-    ip.addParamValue('feat_stride',     4,             @isscalar);
+    ip.addParamValue('feat_stride',     16,             @isscalar);
     % train proposal target only to labled ground-truths or also include
     % other proposal results (selective search, etc.)
     ip.addParamValue('target_only_gt',  true,           @islogical);

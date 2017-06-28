@@ -5,7 +5,7 @@ function model = VGG16_for_Faster_RCNN_VOC2007(model)
 model.mean_image                                = fullfile(pwd, 'models', 'pre_trained_models', 'vgg_16layers', 'mean_image');
 model.pre_trained_net_file                      = fullfile(pwd, 'models', 'pre_trained_models', 'vgg_16layers', 'vgg16.caffemodel');
 % Stride in input image pixels at the last conv layer
-model.feat_stride                               = 4;
+model.feat_stride                               = 16;
 
 %% stage 1 rpn, inited from pre-trained network
 %RPN相关prototxt文件路径
