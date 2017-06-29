@@ -587,41 +587,41 @@ layer {
 }
 #-----------------------P4/P3/P2(merged map)-------------------------
 #-----P4(14*14*256)-----conv:(3*3*256)*256-----newP4(14*14*256)-----删除
-layer {
-	bottom: "P4"
-	top: "newP4"
-	name: "newP4"
-	param {
-		lr_mult: 1.0
-	}
-	param {
-		lr_mult: 2.0
-	}
-	type: "Convolution"
-	convolution_param {
-		num_output: 256
-		pad: 1
-		kernel_size: 3
-	}
-}
+#layer {
+#	bottom: "P4"
+#	top: "newP4"
+#	name: "newP4"
+#	param {
+#		lr_mult: 1.0
+#	}
+#	param {
+#		lr_mult: 2.0
+#	}
+#	type: "Convolution"
+#	convolution_param {
+#		num_output: 256
+#		pad: 1
+#		kernel_size: 3
+#	}
+#}
 #-----P3(28*28*256)-----conv:(3*3*256)*256-----newP3(28*28*256)-----删除
-layer {
-	bottom: "P3"
-	top: "newP3"
-	name: "newP3"
-	param {
-		lr_mult: 1.0
-	}
-	param {
-		lr_mult: 2.0
-	}
-	type: "Convolution"
-	convolution_param {
-		num_output: 256
-		pad: 1
-		kernel_size: 3
-	}
-}
+#layer {
+#	bottom: "P3"
+#	top: "newP3"
+#	name: "newP3"
+#	param {
+#		lr_mult: 1.0
+#	}
+#	param {
+#		lr_mult: 2.0
+#	}
+#	type: "Convolution"
+#	convolution_param {
+#		num_output: 256
+#		pad: 1
+#		kernel_size: 3
+#	}
+#}
 #-----P2(56*56*256)-----conv:(3*3*256)*256-----newP2(56*56*256)-----
 layer {
 	bottom: "P2"
