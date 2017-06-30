@@ -414,6 +414,12 @@ layer {
 	convolution_param {
 		num_output: 256
 		kernel_size: 1
+		weight_filler {
+            type: "xavier"
+        }
+        bias_filler {
+            type: "constant"
+        }
 	}
 }
 #-----P5----->upP5-----upP5:(7-1)*2-2*1+4=14-----14*14*256-----
@@ -427,13 +433,13 @@ layer {
 	    decay_mult: 0
 	}
     convolution_param {
-        kernel_size: 4     #{{2 * factor - factor % 2}},factor=2 
-  	    stride: 2     #{{factor}},factor=2
+        kernel_size: 4       #{{2 * factor - factor % 2}},factor=2 
+  	    stride: 2            #{{factor}},factor=2
         num_output: 256 
-        pad: 1     #{{ceil((factor - 1) / 2.)}},factor=2
-#       weight_filler: { 
-#		    type: "bilinear" 
-#		} 
+        pad: 1               #{{ceil((factor - 1) / 2.)}},factor=2
+        weight_filler: { 
+		    type: "bilinear" 
+		} 
 	    bias_term: false
     }
 }
@@ -453,13 +459,19 @@ layer {
 	convolution_param {
 		num_output: 256
 		kernel_size: 1
+		weight_filler {
+            type: "xavier"
+        }
+        bias_filler {
+            type: "constant"
+        }
 	}
 }
 #-----upP5----->upP5crop-----
 layer {
     name: "upP5crop"
     type: "Crop"
-    bottom: "upP5"
+	bottom: "upP5"
     bottom: "newC4"
     top: "upP5crop"
     crop_param {
@@ -489,13 +501,13 @@ layer {
 	    decay_mult: 0
 	}
     convolution_param {
-        kernel_size: 4     #{{2 * factor - factor % 2}},factor=2 
-  	    stride: 2     #{{factor}},factor=2
+        kernel_size: 4       #{{2 * factor - factor % 2}},factor=2 
+  	    stride: 2            #{{factor}},factor=2
         num_output: 256 
-        pad: 1     #{{ceil((factor - 1) / 2.)}},factor=2
-#        weight_filler: { 
-#		    type: "bilinear" 
-#		} 
+        pad: 1               #{{ceil((factor - 1) / 2.)}},factor=2
+        weight_filler: { 
+		    type: "bilinear" 
+		} 
 	    bias_term: false
     }
 }
@@ -515,13 +527,19 @@ layer {
 	convolution_param {
 		num_output: 256
 		kernel_size: 1
+		weight_filler {
+            type: "xavier"
+        }
+        bias_filler {
+            type: "constant"
+        }
 	}
 }
 #-----upP4----->upP4crop-----
 layer {
     name: "upP4crop"
     type: "Crop"
-    bottom: "upP4"
+	bottom: "upP4"
     bottom: "newC3"
     top: "upP4crop"
     crop_param {
@@ -551,13 +569,13 @@ layer {
 	    decay_mult: 0
 	}
     convolution_param {
-        kernel_size: 4     #{{2 * factor - factor % 2}},factor=2 
-  	    stride: 2     #{{factor}},factor=2
+        kernel_size: 4       #{{2 * factor - factor % 2}},factor=2 
+  	    stride: 2            #{{factor}},factor=2
         num_output: 256 
-        pad: 1     #{{ceil((factor - 1) / 2.)}},factor=2
-#        weight_filler: { 
-#		    type: "bilinear" 
-#		} 
+        pad: 1               #{{ceil((factor - 1) / 2.)}},factor=2
+        weight_filler: { 
+		    type: "bilinear" 
+		} 
 	    bias_term: false
     }
 }
@@ -566,7 +584,7 @@ layer {
     name: "upP3crop"
     type: "Crop"
     bottom: "upP3"
-    bottom: "conv3_3"
+	bottom: "conv3_3"
     top: "upP3crop"
     crop_param {
         axis: 2
@@ -602,6 +620,12 @@ layer {
 #		num_output: 256
 #		pad: 1
 #		kernel_size: 3
+#		weight_filler {
+#            type: "xavier"
+#        }
+#        bias_filler {
+#            type: "constant"
+#        }
 #	}
 #}
 #-----P3(28*28*256)-----conv:(3*3*256)*256-----newP3(28*28*256)-----删除
@@ -620,6 +644,12 @@ layer {
 #		num_output: 256
 #		pad: 1
 #		kernel_size: 3
+#		weight_filler {
+#            type: "xavier"
+#        }
+#        bias_filler {
+#            type: "constant"
+#        }
 #	}
 #}
 #-----P2(56*56*256)-----conv:(3*3*256)*256-----newP2(56*56*256)-----
@@ -638,6 +668,12 @@ layer {
 		num_output: 256
 		pad: 1
 		kernel_size: 3
+		weight_filler {
+            type: "xavier"
+        }
+        bias_filler {
+            type: "constant"
+        }
 	}
 }
 #-----------------------layer +-------------------------
@@ -650,14 +686,14 @@ layer {
 	roi_pooling_param {
 		pooled_w: 7
 		pooled_h: 7
-		spatial_scale: 0.0625  # (1/16)
+		spatial_scale: 0.25  # (1/4)
 	}
 }
 
 layer {
 	bottom: "newpool5"
-	top: "fc6"
-	name: "fc6"
+	top: "newfc6"
+	name: "newfc6"
 	param {
 		lr_mult: 1.0
 	}
@@ -667,19 +703,25 @@ layer {
 	type: "InnerProduct"
 	inner_product_param {
 		num_output: 4096
+		weight_filler {
+            type: "xavier"
+        }
+        bias_filler {
+            type: "constant"
+        }
 	}
 }
 
 layer {
-	bottom: "fc6"
-	top: "fc6"
+	bottom: "newfc6"
+	top: "newfc6"
 	name: "relu6"
 	type: "ReLU"
 }
 
 layer {
-	bottom: "fc6"
-	top: "fc6"
+	bottom: "newfc6"
+	top: "newfc6"
 	name: "drop6"
 	type: "Dropout"
 	dropout_param {
@@ -688,9 +730,9 @@ layer {
 }
 
 layer {
-	bottom: "fc6"
-	top: "fc7"
-	name: "fc7"
+	bottom: "newfc6"
+	top: "newfc7"
+	name: "newfc7"
 	param {
 		lr_mult: 1.0
 	}
@@ -700,19 +742,25 @@ layer {
 	type: "InnerProduct"
 	inner_product_param {
 		num_output: 4096
+		weight_filler {
+            type: "xavier"
+        }
+        bias_filler {
+            type: "constant"
+        }
 	}
 }
 
 layer {
-	bottom: "fc7"
-	top: "fc7"
+	bottom: "newfc7"
+	top: "newfc7"
 	name: "relu7"
 	type: "ReLU"
 }
 
 layer {
-	bottom: "fc7"
-	top: "fc7"
+	bottom: "newfc7"
+	top: "newfc7"
 	name: "drop7"
 	type: "Dropout"
 	dropout_param {
@@ -721,7 +769,7 @@ layer {
 }
 
 layer {
-	bottom: "fc7"
+	bottom: "newfc7"
 	top: "cls_score"
 	name: "cls_score"
 	param {
@@ -745,7 +793,7 @@ layer {
 }
 
 layer {
-	bottom: "fc7"
+	bottom: "newfc7"
 	top: "bbox_pred"
 	name: "bbox_pred"
 	type: "InnerProduct"
